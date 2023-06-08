@@ -1,4 +1,7 @@
 #include <bits/stdc++.h> 
+using namespace std;
+
+
 int modularExponentiation(int x, int n, int m) {
 	// Write your code here.
     long ans = 1;
@@ -13,4 +16,8 @@ int modularExponentiation(int x, int n, int m) {
         }
     }
     return (int)(ans%m);
+}
+
+int main() {
+    return 0;
 }
