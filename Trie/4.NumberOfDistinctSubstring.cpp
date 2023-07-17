@@ -14,3 +14,8 @@ int distinctSubstring(string &word) {
 
     return mp.size();
 }
+
+int main() {
+    
+    return 0;
+}

@@ -66,3 +66,8 @@ string completeString(int n, vector<string> &a){
     if(ans.size() == 0) return "None";
     return ans;
 }
+
+int main() {
+    
+    return 0;
+}

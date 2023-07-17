@@ -97,3 +97,7 @@ vector<int> maxXorQueries(vector<int> &arr, vector<vector<int>> &queries){
 	}
 	return ans;
 }
+
+int main() {
+    return 0;
+}

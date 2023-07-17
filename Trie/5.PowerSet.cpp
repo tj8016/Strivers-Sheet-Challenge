@@ -35,3 +35,7 @@ vector<vector<int>> pwset(vector<int> v)
 
     return ans;
 }
+
+int main() {
+    return 0;
+}

@@ -45,3 +45,7 @@ int maximumXor(vector<int> A)
  
 
 }
+
+int main() {
+    return 0;
+}
