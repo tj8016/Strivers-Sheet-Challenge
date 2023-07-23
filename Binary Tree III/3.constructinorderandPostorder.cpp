@@ -21,7 +21,7 @@ TreeNode<int>* f(vector<int>& postOrder, vector<int>& inOrder,int is,int ie){
      TreeNode<int>* root=new TreeNode<int>(postOrder[posts--]);
      int inIn;
      for(int i=is;i<=ie;i++){
-          if(root->data==inOrder[i]){
+          if(root->val==inOrder[i]){
                inIn=i;
                break;
           }
