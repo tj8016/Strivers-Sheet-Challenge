@@ -1,62 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Disjoint
+struct DSU
 {
-private:
-    vector<int> parent, size;
-
-public:
-    Disjoint(int n)
+    vector<int> e;
+    DSU(int n)
     {
-        parent.resize(n + 1);
-        for (int i = 1; i <= n; i++)
-            parent[i] = i;
-        size.resize(n + 1, 1);
+        e = vector<int>(n, -1);
     }
 
-    int findParent(int node)
+    int parent(int x)
     {
-        if (node == parent[node])
-            return node;
-        return parent[node] = findParent(parent[node]);
+        return e[x] < 0 ? x : e[x] = parent(e[x]);
     }
 
-    void unionBySize(int u, int v)
+    int size(int x)
     {
-        int pu = findParent(u);
-        int pv = findParent(v);
+        return -e[parent(x)];
+    }
 
-        if (size[pu] > size[v])
-        {
-            parent[pv] = pu;
-            size[pu] += size[pv];
-        }
-        else
-        {
-            parent[pu] = pv;
-            size[pv] += size[pu];
-        }
+    bool union_sets(int x, int y)
+    {  // union by size
+        x = parent(x);
+        y = parent(y);
+        if (x == y) 
+            return false;
+        if (e[x] > e[y])
+            swap(x, y);
+        e[x] += e[y];
+        e[y] = x;
+        return true;
     }
 };
 
-int kruskalMST(int n, int m, vector<vector<int>> &graph)
+// Custom comparator to sort the edges.
+bool compare(vector <int> const &a, vector <int> const &b)
 {
-    sort(graph.begin(), graph.end(),
-         [](vector<int> &a, vector<int> &b)
-         { return a[2] < b[2]; });
-    Disjoint d(n);
+    return a[2] < b[2];
+}
 
-    int sum = 0;
-    for (auto i : graph)
+int kruskalMST(int n, vector<vector<int>> &edges)
+{
+    DSU d(n + 1);
+
+    // To store the weight of MST.
+    int cost = 0;
+
+    // Sort the edges in ascending order by its weight.
+    sort(edges.begin(), edges.end(), compare);
+
+    // Start traversign through the edges.
+    for (auto& edge: edges)
     {
-        int wt = i[2], u = i[0], v = i[1];
-        if (d.findParent(u) != d.findParent(v))
+        // Check if both vertices of current edge belong to different sets(subtrees).
+        if (d.parent(edge[0]) != d.parent(edge[1]))
         {
-            sum += wt;
-            d.unionBySize(u, v);
+            // Add the weight of the current edge.
+            cost += edge[2];
+
+            // Merge the two sets(subtrees).
+            d.union_sets(edge[0], edge[1]);
         }
     }
-
-    return sum;
+    return cost;
 }
